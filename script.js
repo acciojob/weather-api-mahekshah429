@@ -1,24 +1,16 @@
-document.getElementById('getWeatherBtn').addEventListener('click', getWeather);
+document.getElementById("getWeather").addEventListener("click", () => {
+  const apiKey = "e467712b257e418838be97cc881a71de"; // Your API key
+  const city = "London,uk";
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
 
-function getWeather() {
-  const apiKey = 'YOUR_API_KEY';
-  const city = 'London';
-  const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
-
-  fetch(apiUrl)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return response.json();
-    })
+  fetch(url)
+    .then(response => response.json())
     .then(data => {
-      const weather = data.weather[0].main;
-      document.getElementById('weatherData').textContent =
-        `Current weather in London: ${weather}`;
+      const mainWeather = data.weather[0].main;
+      document.getElementById("weatherData").innerText = `Current weather in London: ${mainWeather}`;
     })
     .catch(error => {
-      document.getElementById('weatherData').textContent =
-        `Error fetching weather: ${error.message}`;
+      document.getElementById("weatherData").innerText = "Failed to load weather data.";
+      console.error("Error fetching weather:", error);
     });
-}
+});
